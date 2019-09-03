@@ -1,6 +1,3 @@
-/* Treehouse FSJS Techdegree
- * Project 4 - OOP Game App
- * app.js */
 const game = new Game();
 
 /**
@@ -19,14 +16,19 @@ startBtn.addEventListener('click', function() {
  * place on a button
  */
 document.getElementById('qwerty').addEventListener('click', e => {
-    if (e.target.tagName === 'BUTTON') {
+//disables callback when the player has lost or won
+    if (e.target.tagName === 'BUTTON' && game.missed < 5 && !game.checkForWin()) {
         game.handleInteraction(e);
     }
 });
 
-
+/**
+ * adds keydown event handler, and calls handleInteraction method
+ * when letter keys are pressed
+ */
 document.addEventListener('keydown', e => {
-    if(/^[a-z]$/.test(e.key)) {
+//disables callback when the player has lost or won
+    if(/^[a-z]$/.test(e.key) && game.missed < 5 && !game.checkForWin()) {
         game.handleInteraction(e);
     }
 });
