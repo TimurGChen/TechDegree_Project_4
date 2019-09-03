@@ -8,7 +8,7 @@ by clicking on on-screen keyboard or typing on the device key board.
 
 CSS Dark Mode Adjustments:
      To comfort the eyes of players addicted to the game and continue to play when the
-sun goes out and lights are out, the darker version features an overall darker color
+sun goes down and lights are out, the darker version features an overall darker color
 theme.
 
 Major Adjustments:
