@@ -36,26 +36,37 @@
       * responds to user's click on the on-screen keyboard:
       * selected keys are disabled. For each right/wrong selection,
       *  it checks whether the game is over
-      * @param {event} e - 
+      * @param {event} e - click event
       */
-     handleInteraction() {
-         document.getElementById('qwerty').addEventListener('click', e => {
-            const keyButton = e.target;
-            const letter = e.target.textContent;
-            const phrase = this.activePhrase;
-            if(keyButton.className === 'key') {
-                if (phrase.checkLetter(letter)) {
-                    keyButton.classList.replace('key', 'chosen');
-                    phrase.showMatchedLetter(letter);
-                    if (this.checkForWin()) {
-                        this.gameOver(true);
-                    }
-                } else {
-                    keyButton.classList.replace('key', 'wrong');
-                    this.removeLife();
-                };
+     handleInteraction(e) {
+        let keyButton = null;
+        let letter = null;
+        if (e.type === 'click') {
+            keyButton = e.target;
+            letter = e.target.textContent;
+        } else if (e.type === 'keydown') {
+            letter = e.key;
+            const buttons = document.querySelectorAll('#qwerty button');
+            for (let button of buttons) {
+                if (button.textContent === letter) {
+                    keyButton = button;
+                }
+            }
+        }
+        keyButton.disabled = true;
+        const phrase = this.activePhrase;
+        if(keyButton.className === 'key') {
+            if (phrase.checkLetter(letter)) {
+                keyButton.classList.replace('key', 'chosen');
+                phrase.showMatchedLetter(letter);
+                if (this.checkForWin()) {
+                    this.gameOver(true);
+                }
+            } else {
+                keyButton.classList.replace('key', 'wrong');
+                this.removeLife();
             };
-         });
+        };
      }
 
      /**
@@ -117,7 +128,10 @@
         for (let li of phraseLis) li.remove();
         //resets all keyboard buttons' class to 'key'
         const keys = document.querySelectorAll('#qwerty button');
-        for (let key of keys) key.className = 'key';
+        for (let key of keys) {
+            key.className = 'key';
+            key.disabled = false;
+        };
         //resets all heart images
         const hearts = document.querySelectorAll('#scoreboard img');
         for (let heart of hearts) {
